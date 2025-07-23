@@ -147,6 +147,8 @@ public class MwmActivity extends BaseMwmFragmentActivity
   private static final String EXTRA_CONSUMED = "mwm.extra.intent.processed";
   private boolean mPreciseLocationDialogShown = false;
 
+  private static final double DPAD_SCROLL_DELTA = 100.0;
+
   private static final String[] DOCKED_FRAGMENTS = {SearchFragment.class.getName(), DownloaderFragment.class.getName(),
                                                     RoutingPlanFragment.class.getName(),
                                                     EditorHostFragment.class.getName(), ReportFragment.class.getName()};
@@ -2254,8 +2256,26 @@ public class MwmActivity extends BaseMwmFragmentActivity
   {
     switch (keyCode)
     {
-      case KeyEvent.KEYCODE_DPAD_DOWN: Map.zoomOut(); return true;
-      case KeyEvent.KEYCODE_DPAD_UP: Map.zoomIn(); return true;
+      case KeyEvent.KEYCODE_DPAD_UP:
+        Map.scroll(0.0, DPAD_SCROLL_DELTA);
+        return true;
+      case KeyEvent.KEYCODE_DPAD_DOWN:
+        Map.scroll(0.0, -DPAD_SCROLL_DELTA);
+        return true;
+      case KeyEvent.KEYCODE_DPAD_LEFT:
+        Map.scroll(DPAD_SCROLL_DELTA, 0.0);
+        return true;
+      case KeyEvent.KEYCODE_DPAD_RIGHT:
+        Map.scroll(-DPAD_SCROLL_DELTA, 0.0);
+        return true;
+      case KeyEvent.KEYCODE_1:
+      case KeyEvent.KEYCODE_NUMPAD_1:
+        Map.zoomIn();
+        return true;
+      case KeyEvent.KEYCODE_3:
+      case KeyEvent.KEYCODE_NUMPAD_3:
+        Map.zoomOut();
+        return true;
       case KeyEvent.KEYCODE_ESCAPE:
         final Intent currIntent = getIntent();
         final String backUrl = Framework.nativeGetParsedBackUrl();

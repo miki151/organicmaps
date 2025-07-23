@@ -283,6 +283,11 @@ public final class Map
     Map.nativeOnScroll(distanceX, distanceY);
   }
 
+  public static void scroll(double distanceX, double distanceY)
+  {
+    nativeOnScroll(distanceX, distanceY);
+  }
+
   public static void zoomIn()
   {
     nativeScalePlus();
